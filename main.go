@@ -1,17 +1,11 @@
 package main
 
 import (
-	"mc-server-manager/controller"
-	"net/http"
-
 	"github.com/gorilla/mux"
+	"mc-server-manager/controller"
+	"mc-server-manager/ws"
+	"net/http"
 )
-
-type Server struct {
-	RconPort      uint32 `json:"rconPort"`
-	Ip            string `json:"ip"`
-	ContainerName string `json:"containerName"`
-}
 
 func main() {
 	router := mux.NewRouter()
@@ -20,6 +14,8 @@ func main() {
 	if err != nil {
 		return
 	}
+
+	ws.StartWsServer()
 
 	for {
 
