@@ -36,6 +36,19 @@ func (h *SimpleHandler) Handle(_ context.Context, r slog.Record) error {
 	levelStr = fmt.Sprintf("%-5s", levelStr)
 
 	line := fmt.Sprintf("[%s] %s %s", ts, levelStr, r.Message)
+
+	r.Attrs(func(a slog.Attr) bool {
+		val := a.Value.Any()
+
+		if errVal, ok := val.(error); ok {
+			line += fmt.Sprintf(" Trace: %s", errVal.Error())
+		} else {
+			line += fmt.Sprintf(" %s=%v", a.Key, val)
+		}
+
+		return true
+	})
+
 	_, err := fmt.Fprintln(h.w, line)
 	return err
 }
