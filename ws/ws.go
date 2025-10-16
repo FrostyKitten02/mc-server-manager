@@ -51,7 +51,7 @@ func StartWsServer(port uint64) {
 	http.HandleFunc("/logs", WsLogsHandler)
 
 	addr := ":" + strconv.FormatUint(port, 10)
-	slog.Error("Starting WebSocket server on " + addr)
+	slog.Info("Starting WebSocket server on " + addr)
 	err := http.ListenAndServe(addr, nil)
 	if err != nil {
 		slog.Error("Error starting websocket server: ", err)
