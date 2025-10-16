@@ -2,7 +2,7 @@ package conf
 
 import (
 	"encoding/json"
-	"fmt"
+	"log/slog"
 	"mc-server-manager/conf/model"
 	"os"
 )
@@ -10,14 +10,14 @@ import (
 func readServersConf() []model.ServerConfig {
 	data, err := os.ReadFile(SERVERS_CONF_LOCATION)
 	if err != nil {
-		fmt.Println("Error reading server conf file")
+		slog.Error("Error reading server conf file")
 		panic(err)
 	}
 
 	var serverConf []model.ServerConfig
 
 	if marshalErr := json.Unmarshal(data, &serverConf); marshalErr != nil {
-		fmt.Println("Error reading server conf file")
+		slog.Error("Error reading server conf file")
 		panic(marshalErr)
 	}
 
@@ -27,13 +27,13 @@ func readServersConf() []model.ServerConfig {
 func readConfig() model.Config {
 	data, err := os.ReadFile(CONFIG_LOCATION)
 	if err != nil {
-		fmt.Println("Error reading config file")
+		slog.Error("Error reading config file")
 		panic(err)
 	}
 
 	var conf model.Config
 	if marshalErr := json.Unmarshal(data, &conf); marshalErr != nil {
-		fmt.Println("Error reading config file")
+		slog.Error("Error reading config file")
 		panic(marshalErr)
 	}
 

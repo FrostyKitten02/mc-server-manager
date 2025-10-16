@@ -2,17 +2,16 @@ package logs
 
 import (
 	"context"
-	"fmt"
 	"github.com/gorilla/websocket"
 	"github.com/moby/moby/client"
 	"io"
-	"log"
+	"log/slog"
 )
 
 func GetContainerLogs(containerName string, wsConn *websocket.Conn) {
 	apiClient, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
 	if err != nil {
-		fmt.Println("GetContainerLogs error:", err)
+		slog.Info("GetContainerLogs error:", err)
 		return
 	}
 	defer apiClient.Close()
@@ -27,7 +26,7 @@ func GetContainerLogs(containerName string, wsConn *websocket.Conn) {
 	}
 	logs, logsErr := apiClient.ContainerLogs(context.Background(), containerName, containerLogOptions)
 	if logsErr != nil {
-		log.Println("Error getting container logs:", logsErr)
+		slog.Error("Error getting container logs:", logsErr)
 		return
 	}
 	defer logs.Close()
@@ -35,7 +34,7 @@ func GetContainerLogs(containerName string, wsConn *websocket.Conn) {
 	wsWriter := &WebSocketWriter{Conn: wsConn}
 	_, copyErr := io.Copy(wsWriter, logs)
 	if copyErr != nil {
-		log.Println("Error copying logs to websocket:", copyErr)
+		slog.Error("Error copying logs to websocket:", copyErr)
 	}
 
 }
