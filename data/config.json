@@ -1,0 +1,5 @@
+{
+  "serverIp" : "localhost",
+  "serverPort" : 4000,
+  "wsPort" : 4020
+}

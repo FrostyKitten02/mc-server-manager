@@ -1,10 +1,12 @@
 package ws
 
 import (
+	"fmt"
 	"github.com/gorilla/websocket"
 	"log"
 	"mc-server-manager/ws/logs"
 	"net/http"
+	"strconv"
 )
 
 var upgrader = websocket.Upgrader{
@@ -46,12 +48,13 @@ func WsLogsHandler(w http.ResponseWriter, r *http.Request) {
 	logs.GetContainerLogs("test", conn)
 }
 
-func StartWsServer() {
+func StartWsServer(port uint64) {
 	http.HandleFunc("/logs", WsLogsHandler)
 
-	log.Println("Starting WebSocket server on :4020")
-	err := http.ListenAndServe(":4020", nil)
+	addr := ":" + strconv.FormatUint(port, 10)
+	fmt.Println("Starting WebSocket server on " + addr)
+	err := http.ListenAndServe(addr, nil)
 	if err != nil {
-		log.Fatal("ListenAndServe error:", err)
+		log.Fatal("Error starting websocket server: ", err)
 	}
 }

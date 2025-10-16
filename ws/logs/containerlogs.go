@@ -44,7 +44,7 @@ type WebSocketWriter struct {
 	Conn *websocket.Conn
 }
 
-// Write sends data to the WebSocket client
+// Write sends model to the WebSocket client
 func (w *WebSocketWriter) Write(p []byte) (int, error) {
 	err := w.Conn.WriteMessage(websocket.TextMessage, p)
 	if err != nil {

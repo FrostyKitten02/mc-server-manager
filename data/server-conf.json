@@ -1,0 +1,11 @@
+[
+  {
+    "id": 1,
+    "name" : "GTNH",
+    "dockerName" : "gtnh",
+    "mcVersion" : "1.7.10",
+    "modPack" : "Greg Tech: New Horizons",
+    "modPackVersion" : "2.8.0",
+    "ip" : "127.0.0.1"
+  }
+]

@@ -1,21 +1,16 @@
 package main
 
 import (
-	"github.com/gorilla/mux"
-	"mc-server-manager/controller"
+	"mc-server-manager/conf"
+	"mc-server-manager/httpserver"
 	"mc-server-manager/ws"
-	"net/http"
 )
 
 func main() {
-	router := mux.NewRouter()
-	controller.BindServersEndpoints(router)
-	err := http.ListenAndServe(":4000", router)
-	if err != nil {
-		return
-	}
+	conf.Load()
 
-	ws.StartWsServer()
+	go httpserver.StartHttpServer(conf.Conf.ServerPort)
+	go ws.StartWsServer(conf.Conf.WsPort)
 
 	for {
 
