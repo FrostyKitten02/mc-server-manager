@@ -2,11 +2,10 @@ package controller
 
 import (
 	"encoding/json"
+	"github.com/gorilla/mux"
 	"mc-server-manager/conf"
 	"mc-server-manager/conf/model"
 	"net/http"
-
-	"github.com/gorilla/mux"
 )
 
 func BindServersEndpoints(router *mux.Router) {
