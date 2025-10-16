@@ -30,7 +30,7 @@ func (h *SimpleHandler) Enabled(_ context.Context, lvl slog.Level) bool {
 }
 
 func (h *SimpleHandler) Handle(_ context.Context, r slog.Record) error {
-	ts := r.Time.Format(time.DateTime)
+	ts := r.Time.Format(time.DateTime + ".000")
 
 	levelStr := strings.ToUpper(r.Level.String())
 	levelStr = fmt.Sprintf("%-5s", levelStr)
