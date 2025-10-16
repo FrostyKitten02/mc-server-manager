@@ -33,7 +33,7 @@ func WsLogsHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	token := string(msg)
-	slog.Error("Received token:", token)
+	slog.Debug("Received token:", token)
 
 	if !validateJWT(token) {
 		slog.Debug("Invalid token, closing connection")
