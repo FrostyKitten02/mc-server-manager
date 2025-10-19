@@ -61,8 +61,8 @@ func BindAuthEndpoints(router *mux.Router) {
 }
 
 func handleLogin(w http.ResponseWriter, r *http.Request) {
-	url := conf.GoogleOauth.AuthCodeURL("state-token", oauth2.AccessTypeOffline, oauth2.SetAuthURLParam("prompt", "select_account"))
-	http.Redirect(w, r, url, http.StatusTemporaryRedirect)
+	authUrl := conf.GoogleOauth.AuthCodeURL("state-token", oauth2.AccessTypeOffline, oauth2.SetAuthURLParam("prompt", "select_account"))
+	http.Redirect(w, r, authUrl, http.StatusTemporaryRedirect)
 }
 
 // TODO redirect back to login with failed msg???
@@ -104,6 +104,6 @@ func handleCallback(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	redirectURL := fmt.Sprintf("http://localhost:5000/auth/callback?token=%s", url.QueryEscape(tokenString))
+	redirectURL := fmt.Sprintf("%s?token=%s", conf.Conf.AuthSuccessUrl, url.QueryEscape(tokenString))
 	http.Redirect(w, r, redirectURL, http.StatusTemporaryRedirect)
 }
