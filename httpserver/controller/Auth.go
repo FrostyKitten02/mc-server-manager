@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
+	"time"
 )
 
 // TODO: add refresh token to jwt?
@@ -51,7 +52,7 @@ func createAuthMiddlewareHandler(next http.Handler) http.Handler {
 
 		tokenStr := strings.TrimPrefix(authHeader, "Bearer ")
 
-		claims := Claims{}
+		claims := &Claims{}
 		token, err := jwt.ParseWithClaims(tokenStr, claims, func(token *jwt.Token) (interface{}, error) {
 			return []byte(conf.Conf.JwtSecret), nil
 		})
@@ -95,13 +96,27 @@ func handleCallback(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	jwtToken := jwt.New(jwt.SigningMethodHS256)
-	jwt.NewWithClaims(jwt.SigningMethodHS256, Claims{
+	currentTime := time.Now()
+	jwtToken := jwt.NewWithClaims(jwt.SigningMethodHS256, Claims{
 		User: User{
 			Email:     claims["email"].(string),
 			Name:      claims["name"].(string),
 			FirstName: claims["given_name"].(string),
 			LastName:  claims["family_name"].(string),
+		},
+		RegisteredClaims: jwt.RegisteredClaims{
+			Issuer:   "mc-server-manager",
+			Subject:  claims["email"].(string),
+			Audience: []string{"mc-server-manager-web"},
+			ExpiresAt: &jwt.NumericDate{
+				Time: currentTime.Add(24 * time.Hour),
+			},
+			IssuedAt: &jwt.NumericDate{
+				Time: currentTime,
+			},
+			NotBefore: &jwt.NumericDate{
+				Time: currentTime,
+			},
 		},
 	})
 	tokenString, err4 := jwtToken.SignedString([]byte(conf.Conf.JwtSecret))
