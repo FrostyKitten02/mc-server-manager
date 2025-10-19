@@ -11,6 +11,9 @@ import (
 
 func StartHttpServer(port uint64) {
 	router := mux.NewRouter()
+	controller.AddAuthMiddleware(router)
+
+	controller.BindAuthEndpoints(router)
 	controller.BindServersEndpoints(router)
 	addr := "127.0.0.1:" + strconv.FormatUint(port, 10)
 	slog.Info("Starting http server on " + addr)

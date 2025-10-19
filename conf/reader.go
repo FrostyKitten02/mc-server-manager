@@ -2,6 +2,8 @@ package conf
 
 import (
 	"encoding/json"
+	"golang.org/x/oauth2"
+	"golang.org/x/oauth2/google"
 	"log/slog"
 	"mc-server-manager/conf/model"
 	"os"
@@ -38,4 +40,31 @@ func readConfig() model.Config {
 	}
 
 	return conf
+}
+
+func readOAuthConfig() oauth2.Config {
+	data, err := os.ReadFile(GOOGLE_OAUTH_LOCATION)
+	if err != nil {
+		slog.Error("Error reading config file", err)
+		panic(err)
+	}
+
+	var conf model.GoogleOauth
+	if marshalErr := json.Unmarshal(data, &conf); marshalErr != nil {
+		slog.Error("Error reading google oauth config file", err)
+		panic(marshalErr)
+	}
+
+	endpoint := google.Endpoint
+	endpoint.AuthStyle = oauth2.AuthStyleAutoDetect
+	return oauth2.Config{
+		ClientID:     conf.Web.ClientId,
+		ClientSecret: conf.Web.ClientSecret,
+		RedirectURL:  "http://localhost:4000/callback", //TODO!!
+		Scopes: []string{
+			"https://www.googleapis.com/auth/userinfo.email",
+			"https://www.googleapis.com/auth/userinfo.profile",
+		},
+		Endpoint: endpoint,
+	}
 }

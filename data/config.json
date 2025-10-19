@@ -1,5 +1,6 @@
 {
   "serverIp" : "localhost",
   "serverPort" : 4000,
-  "wsPort" : 4020
+  "wsPort" : 4020,
+  "jwtSecret" : "SUPER_SECRET_JWT"
 }
