@@ -12,9 +12,21 @@ import (
 	"strings"
 )
 
+// TODO: add refresh token to jwt?
 type Claims struct {
-	//Email string `json:"email"` // custom field
+	User User `json:"user"`
 	jwt.RegisteredClaims
+}
+
+type User struct {
+	Email     string `json:"email"`
+	Name      string `json:"name"`
+	FirstName string `json:"firstName"`
+	LastName  string `json:"lastName"`
+}
+
+func GetCallingUser(r *http.Request) User {
+	return r.Context().Value("user").(User)
 }
 
 func AddAuthMiddleware(router *mux.Router) {
@@ -49,12 +61,12 @@ func createAuthMiddlewareHandler(next http.Handler) http.Handler {
 			return
 		}
 
-		// Attach email to context for later use
-		ctx := context.WithValue(r.Context(), "userEmail", "TODO_EMAIL")
+		ctx := context.WithValue(r.Context(), "user", claims.User)
 		next.ServeHTTP(w, r.WithContext(ctx))
 	})
 }
 
+// TODO: update paths!!!
 func BindAuthEndpoints(router *mux.Router) {
 	router.HandleFunc("/login", handleLogin).Methods("GET")
 	router.HandleFunc("/callback", handleCallback).Methods("GET")
@@ -83,21 +95,15 @@ func handleCallback(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var user struct {
-		Email     string `json:"email"`
-		Name      string `json:"name"`
-		FirstName string `json:"given_name"`
-		LastName  string `json:"family_name"`
-		Picture   string `json:"picture"`
-	}
-
-	user.Email = claims["email"].(string)
-	user.Name = claims["name"].(string)
-	user.FirstName = claims["given_name"].(string)
-	user.LastName = claims["family_name"].(string)
-
-	//TODO add custom claims!
 	jwtToken := jwt.New(jwt.SigningMethodHS256)
+	jwt.NewWithClaims(jwt.SigningMethodHS256, Claims{
+		User: User{
+			Email:     claims["email"].(string),
+			Name:      claims["name"].(string),
+			FirstName: claims["given_name"].(string),
+			LastName:  claims["family_name"].(string),
+		},
+	})
 	tokenString, err4 := jwtToken.SignedString([]byte(conf.Conf.JwtSecret))
 	if err4 != nil {
 		http.Error(w, "Failed to sign JWT: "+err4.Error(), http.StatusInternalServerError)
