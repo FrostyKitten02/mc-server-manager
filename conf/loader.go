@@ -1,8 +1,8 @@
 package conf
 
 import (
+	"github.com/FrostyKitten02/mc-server-manager/conf/model"
 	"golang.org/x/oauth2"
-	"mc-server-manager/conf/model"
 )
 
 var (

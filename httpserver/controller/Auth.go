@@ -3,10 +3,10 @@ package controller
 import (
 	"context"
 	"fmt"
+	"github.com/FrostyKitten02/mc-server-manager/conf"
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/gorilla/mux"
 	"golang.org/x/oauth2"
-	"mc-server-manager/conf"
 	"net/http"
 	"net/url"
 	"strings"

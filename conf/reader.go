@@ -2,10 +2,10 @@ package conf
 
 import (
 	"encoding/json"
+	"github.com/FrostyKitten02/mc-server-manager/conf/model"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
 	"log/slog"
-	"mc-server-manager/conf/model"
 	"os"
 )
 

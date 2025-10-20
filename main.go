@@ -1,10 +1,10 @@
 package main
 
 import (
-	"mc-server-manager/conf"
-	"mc-server-manager/httpserver"
-	"mc-server-manager/logs"
-	"mc-server-manager/ws"
+	"github.com/FrostyKitten02/mc-server-manager/conf"
+	"github.com/FrostyKitten02/mc-server-manager/httpserver"
+	"github.com/FrostyKitten02/mc-server-manager/logs"
+	"github.com/FrostyKitten02/mc-server-manager/ws"
 )
 
 func main() {

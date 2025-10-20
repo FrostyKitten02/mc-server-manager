@@ -1,9 +1,9 @@
 package httpserver
 
 import (
+	"github.com/FrostyKitten02/mc-server-manager/httpserver/controller"
 	"github.com/gorilla/mux"
 	"log/slog"
-	"mc-server-manager/httpserver/controller"
 	"net/http"
 	"strconv"
 	"time"

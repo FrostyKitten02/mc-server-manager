@@ -2,9 +2,9 @@ package controller
 
 import (
 	"encoding/json"
+	"github.com/FrostyKitten02/mc-server-manager/conf"
+	"github.com/FrostyKitten02/mc-server-manager/conf/model"
 	"github.com/gorilla/mux"
-	"mc-server-manager/conf"
-	"mc-server-manager/conf/model"
 	"net/http"
 )
 

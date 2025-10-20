@@ -1,9 +1,9 @@
 package ws
 
 import (
+	"github.com/FrostyKitten02/mc-server-manager/ws/logs"
 	"github.com/gorilla/websocket"
 	"log/slog"
-	"mc-server-manager/ws/logs"
 	"net/http"
 	"strconv"
 )
