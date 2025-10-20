@@ -9,6 +9,8 @@ import (
 
 func main() {
 	logs.InitLogger()
+
+	conf.InitData()
 	conf.Load()
 
 	go httpserver.StartHttpServer(conf.Conf.ServerPort)

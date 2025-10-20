@@ -10,7 +10,7 @@ import (
 )
 
 func readServersConf() []model.ServerConfig {
-	data, err := os.ReadFile(SERVERS_CONF_LOCATION)
+	data, err := os.ReadFile(ServersConfFileLocation)
 	if err != nil {
 		slog.Error("Error reading server conf file", err)
 		panic(err)
@@ -27,7 +27,7 @@ func readServersConf() []model.ServerConfig {
 }
 
 func readConfig() model.Config {
-	data, err := os.ReadFile(CONFIG_LOCATION)
+	data, err := os.ReadFile(ConfFileLocation)
 	if err != nil {
 		slog.Error("Error reading config file", err)
 		panic(err)
@@ -43,7 +43,7 @@ func readConfig() model.Config {
 }
 
 func readOAuthConfig() oauth2.Config {
-	data, err := os.ReadFile(GOOGLE_OAUTH_LOCATION)
+	data, err := os.ReadFile(GoogleOAuthFileLocation)
 	if err != nil {
 		slog.Error("Error reading config file", err)
 		panic(err)
