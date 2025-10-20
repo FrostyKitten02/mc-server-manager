@@ -1,10 +1,16 @@
-module mc-server-manager
+module github.com/FrostyKitten02/mc-server-manager
 
 go 1.24.0
 
 toolchain go1.24.5
 
-require github.com/gorilla/mux v1.8.1
+require (
+	github.com/golang-jwt/jwt/v5 v5.3.0
+	github.com/gorilla/mux v1.8.1
+	github.com/gorilla/websocket v1.5.3
+	github.com/moby/moby/client v0.1.0-beta.2
+	golang.org/x/oauth2 v0.32.0
+)
 
 require (
 	cloud.google.com/go/compute/metadata v0.3.0 // indirect
@@ -18,13 +24,8 @@ require (
 	github.com/felixge/httpsnoop v1.0.4 // indirect
 	github.com/go-logr/logr v1.4.2 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
-	github.com/golang-jwt/jwt/v5 v5.3.0 // indirect
-	github.com/gorilla/securecookie v1.1.2 // indirect
-	github.com/gorilla/sessions v1.4.0 // indirect
-	github.com/gorilla/websocket v1.5.3 // indirect
 	github.com/moby/docker-image-spec v1.3.1 // indirect
 	github.com/moby/moby/api v1.52.0-beta.2 // indirect
-	github.com/moby/moby/client v0.1.0-beta.2 // indirect
 	github.com/moby/term v0.5.2 // indirect
 	github.com/opencontainers/go-digest v1.0.0 // indirect
 	github.com/opencontainers/image-spec v1.1.1 // indirect
@@ -33,6 +34,5 @@ require (
 	go.opentelemetry.io/otel v1.35.0 // indirect
 	go.opentelemetry.io/otel/metric v1.35.0 // indirect
 	go.opentelemetry.io/otel/trace v1.35.0 // indirect
-	golang.org/x/oauth2 v0.32.0 // indirect
 	golang.org/x/sys v0.33.0 // indirect
 )
